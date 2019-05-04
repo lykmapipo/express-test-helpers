@@ -136,4 +136,35 @@ export const testPatch = (path, body) => {
   return request;
 };
 
+/**
+ * @function testPut
+ * @name testPut
+ * @description Create http get test request
+ * @param {String} path valid path under test
+ * @return {Function} valid supertest post request
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.1.0
+ * @version 0.1.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { testPut } = require('@lykmapipo/express-test-helpers');
+ *
+ * testPut('/v1/user/1', {name: 'John Doe'})
+ *  .expect(200)
+ *  .end(function(err, res) {
+ *    if (err) throw err;
+ *  });
+ *
+ */
+export const testPut = (path, body) => {
+  const request = testRequest().put(path);
+  request.set('Accept', 'application/json');
+  request.set('Content-Type', 'application/json');
+  request.send(body);
+  return request;
+};
+
 export { chai, expect, faker, mock, should, sinon, spy, testApp };
