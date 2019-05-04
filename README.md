@@ -35,9 +35,12 @@ testPost('/v1/users', { name: 'John Doe' })
 
 - With Mocha
 ```js
-const { testGet } = require('@lykmapipo/express-test-helpers');
+const { clear, testGet } = require('@lykmapipo/express-test-helpers');
 
 describe('GET /v1/users', () => {
+    
+    beforeEach(() => clear());
+
     it('responds with json', done => {
         testGet('/v1/users')
             .expect('Content-Type', /json/)
