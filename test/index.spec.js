@@ -4,7 +4,8 @@ import {
   chai,
   faker,
   spy,
-  testApp,
+  app,
+  clear,
   testRequest,
   testOption,
   testHead,
@@ -16,6 +17,8 @@ import {
 } from '../src/index';
 
 describe('express-test-helpers', () => {
+  beforeEach(() => clear());
+
   it('should set test environment', () => {
     expect(process.env.NODE_ENV).to.exist.and.be.equal('test');
   });
@@ -52,10 +55,6 @@ describe('express-test-helpers', () => {
     dialed.restore();
   });
 
-  it('should expose generic test app', () => {
-    expect(testApp).to.exist;
-  });
-
   it('should expose generic test request', done => {
     expect(testRequest).to.exist.and.be.a('function');
     testRequest()
@@ -78,9 +77,19 @@ describe('express-test-helpers', () => {
     testGet('/v1/users').expect(404, done);
   });
 
+  it('should expose test get request', done => {
+    app.get('/v1/users', (req, res) => res.ok());
+    testGet('/v1/users').expect(200, done);
+  });
+
   it('should expose test post request', done => {
     expect(testPost).to.exist.and.be.a('function');
     testPost('/v1/users', { name: faker.name.findName() }).expect(404, done);
+  });
+
+  it('should expose test post request', done => {
+    app.post('/v1/users', (req, res) => res.created());
+    testPost('/v1/users', { name: faker.name.findName() }).expect(201, done);
   });
 
   it('should expose test patch request', done => {

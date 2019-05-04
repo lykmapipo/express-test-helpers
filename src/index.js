@@ -7,8 +7,37 @@ import {
   sinon,
   spy,
 } from '@lykmapipo/test-helpers';
-import { testApp } from '@lykmapipo/express-common';
+import { filter } from 'lodash';
+import { app, testApp } from '@lykmapipo/express-common';
 import supertest from 'supertest';
+
+/**
+ * @function clear
+ * @name clear
+ * @description Clear notFound, errorHandler and route handlers
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.1.0
+ * @version 0.1.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { clear } = require('@lykmapipo/express-test-helpers');
+ *
+ * beforeEach(() => clear());
+ *
+ */
+export const clear = () => {
+  // eslint-disable-next-line no-underscore-dangle
+  app._router.stack = filter(app._router.stack, stack => {
+    const filtered =
+      stack.name !== 'notFound' &&
+      stack.name !== 'errorHandler' &&
+      !stack.route;
+    return filtered;
+  });
+};
 
 /**
  * @function testRequest
@@ -269,4 +298,4 @@ export const testDelete = path => {
   return request;
 };
 
-export { chai, expect, faker, mock, should, sinon, spy, testApp };
+export { chai, expect, faker, mock, should, sinon, spy, app };
