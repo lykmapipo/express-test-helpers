@@ -6,6 +6,7 @@ import {
   spy,
   testApp,
   testRequest,
+  testOption,
   testGet,
   testPost,
   testPatch,
@@ -57,32 +58,37 @@ describe('express-test-helpers', () => {
   it('should expose generic test request', done => {
     expect(testRequest).to.exist.and.be.a('function');
     testRequest()
-      .get('/user')
+      .get('/v1/users')
       .expect(404, done);
+  });
+
+  it('should expose test option request', done => {
+    expect(testOption).to.exist.and.be.a('function');
+    testOption('/v1/users').expect(204, done);
   });
 
   it('should expose test get request', done => {
     expect(testGet).to.exist.and.be.a('function');
-    testGet('/user').expect(404, done);
+    testGet('/v1/users').expect(404, done);
   });
 
   it('should expose test post request', done => {
     expect(testPost).to.exist.and.be.a('function');
-    testPost('/user', { name: faker.name.findName() }).expect(404, done);
+    testPost('/v1/users', { name: faker.name.findName() }).expect(404, done);
   });
 
   it('should expose test patch request', done => {
     expect(testPatch).to.exist.and.be.a('function');
-    testPatch('/user/1', { name: faker.name.findName() }).expect(404, done);
+    testPatch('/v1/users/1', { name: faker.name.findName() }).expect(404, done);
   });
 
   it('should expose test put request', done => {
     expect(testPut).to.exist.and.be.a('function');
-    testPut('/user/1', { name: faker.name.findName() }).expect(404, done);
+    testPut('/v1/users/1', { name: faker.name.findName() }).expect(404, done);
   });
 
   it('should expose test delete request', done => {
     expect(testDelete).to.exist.and.be.a('function');
-    testDelete('/user/1').expect(404, done);
+    testDelete('/v1/users/1').expect(404, done);
   });
 });

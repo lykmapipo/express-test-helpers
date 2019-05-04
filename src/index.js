@@ -39,6 +39,42 @@ export const testRequest = () => {
 };
 
 /**
+ * @function testOption
+ * @name testOption
+ * @description Create http option test request
+ * @param {String} path valid path under test
+ * @return {Function} valid supertest option request
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.1.0
+ * @version 0.1.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { testOption } = require('@lykmapipo/express-test-helpers');
+ *
+ * testOption('/v1/users')
+ *  .expect(200)
+ *  .end((err, res) => {
+ *    if (err) throw err;
+ *  });
+ *
+ * testOption('/v1/users/1')
+ *  .expect(200)
+ *  .end((err, res) => {
+ *    if (err) throw err;
+ *  });
+ *
+ */
+export const testOption = path => {
+  const request = testRequest().options(path);
+  request.set('Accept', 'application/json');
+  request.set('Content-Type', 'application/json');
+  return request;
+};
+
+/**
  * @function testGet
  * @name testGet
  * @description Create http get test request
