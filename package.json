@@ -88,7 +88,8 @@
     "@lykmapipo/express-common": ">=0.16.0",
     "@lykmapipo/test-helpers": ">=0.2.2",
     "lodash": ">=4.17.11",
-    "supertest": ">=4.0.2"
+    "supertest": ">=4.0.2",
+    "uuid": ">=3.3.2"
   },
   "config": {
     "commitizen": {

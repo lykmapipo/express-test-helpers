@@ -7,6 +7,7 @@ import {
   sinon,
   spy,
 } from '@lykmapipo/test-helpers';
+import uuidv1 from 'uuid/v1';
 import { filter, has } from 'lodash';
 import { app, testApp } from '@lykmapipo/express-common';
 import supertest from 'supertest';
@@ -297,6 +298,47 @@ export const testDelete = path => {
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
   return request;
+};
+
+/**
+ * @function testMiddleware
+ * @name testMiddleware
+ * @description Create test requests for a middleware
+ * @param {...Function} path valid express middleware
+ * @return {Function} valid supertest delete request
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.1.0
+ * @version 0.1.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { testMiddleware } = require('@lykmapipo/express-test-helpers');
+ *
+ * const { testGet } = testMiddleware(ipFilter);
+ *
+ * testGet
+ *  .expect(200)
+ *  .end((err, res) => {
+ *    if (err) throw err;
+ *  });
+ *
+ */
+export const testMiddleware = (...middlewares) => {
+  const path = `/${uuidv1()}`;
+  const testReply = (req, res) => res.ok();
+  app.all(path, ...[...middlewares, testReply]);
+  return {
+    testOption: () => testOption(path),
+    testHead: () => testHead(path),
+    testGet: () => testGet(path),
+    testPost: (data = {}) => testPost(path, data),
+    testPatch: (data = {}) => testPatch(path, data),
+    testPut: (data = {}) => testPut(path, data),
+    testDelete: () => testDelete(path),
+    path,
+  };
 };
 
 export { chai, expect, faker, mock, should, sinon, spy, app };
