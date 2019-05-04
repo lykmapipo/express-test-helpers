@@ -50,11 +50,15 @@ describe('express-test-helpers', () => {
     expect(testApp).to.exist;
   });
 
-  it('should expose generic test request', () => {
-    expect(testRequest).to.exist;
+  it('should expose generic test request', done => {
+    expect(testRequest).to.exist.and.be.a('function');
+    testRequest()
+      .get('/user')
+      .expect(404, done);
   });
 
-  it('should expose test get request', () => {
-    expect(testGet).to.exist;
+  it('should expose test get request', done => {
+    expect(testGet).to.exist.and.be.a('function');
+    testGet('/user').expect(404, done);
   });
 });

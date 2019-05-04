@@ -35,8 +35,6 @@ import supertest from 'supertest';
  */
 export const testRequest = () => {
   const request = supertest(testApp());
-  request.set('Accept', 'application/json');
-  request.set('Content-Type', 'application/json');
   return request;
 };
 
@@ -45,7 +43,7 @@ export const testRequest = () => {
  * @name testGet
  * @description Create http get test request
  * @param {String} path valid path under test
- * @return {Function} valid supertest request
+ * @return {Function} valid supertest get request
  * @author lally elias <lallyelias87@mail.com>
  * @license MIT
  * @since 0.1.0
@@ -64,8 +62,10 @@ export const testRequest = () => {
  *
  */
 export const testGet = path => {
-  const request = testRequest();
-  request.get(path);
+  const request = testRequest().get(path);
+  request.set('Accept', 'application/json');
+  request.set('Content-Type', 'application/json');
+
   return request;
 };
 
