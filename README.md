@@ -13,28 +13,24 @@ $ npm install --save @lykmapipo/express-test-helpers
 
 ## Usage
 ```js
-const { testRouter } = require('@lykmapipo/express-test-helpers');
+const { testGet } = require('@lykmapipo/express-test-helpers');
 
-const request = testRouter(router);
-
-request.get('/user')
-  .expect('Content-Type', /json/)
-  .expect('Content-Length', '15')
-  .expect(200)
-  .end(function(err, res) {
-    if (err) throw err;
-  });
+testGet('/user')
+    .expect('Content-Type', /json/)
+    .expect('Content-Length', '15')
+    .expect(200)
+    .end(function(err, res) {
+        if (err) throw err;
+    });
 ```
 
 - With Mocha
 ```js
-const { testRouter } = require('@lykmapipo/express-test-helpers');
+const { testGet } = require('@lykmapipo/express-test-helpers');
 
 describe('GET /user', () => {
     it('responds with json', done => {
-        const request = testRouter(router);
-        request
-            .get('/user')
+        testGet('/user')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200, done);
