@@ -9,7 +9,7 @@ import {
 } from '@lykmapipo/test-helpers';
 import uuidv1 from 'uuid/v1';
 import { filter, has } from 'lodash';
-import { app, testApp } from '@lykmapipo/express-common';
+import { app, mount, testApp } from '@lykmapipo/express-common';
 import supertest from 'supertest';
 
 /**
@@ -305,7 +305,7 @@ export const testDelete = path => {
  * @name testMiddleware
  * @description Create test requests for a middleware
  * @param {...Function} path valid express middleware
- * @return {Function} valid supertest delete request
+ * @return {Object} valid supertest requests
  * @author lally elias <lallyelias87@mail.com>
  * @license MIT
  * @since 0.1.0
@@ -337,6 +337,47 @@ export const testMiddleware = (...middlewares) => {
     testPatch: (data = {}) => testPatch(path, data),
     testPut: (data = {}) => testPut(path, data),
     testDelete: () => testDelete(path),
+    path,
+  };
+};
+
+/**
+ * @function testRouter
+ * @name testRouter
+ * @description Create test requests for express router
+ * @param {String} resource valid express router mount path
+ * @param {Router} router valid express router
+ * @return {Object} valid supertest requests
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.1.0
+ * @version 0.1.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { testRouter } = require('@lykmapipo/express-test-helpers');
+ *
+ * const { testGet } = testRouter('/v1/users', router);
+ *
+ * testGet
+ *  .expect(200)
+ *  .end((err, res) => {
+ *    if (err) throw err;
+ *  });
+ *
+ */
+export const testRouter = (resource, router) => {
+  const path = `/v1/${resource}`;
+  mount(router);
+  return {
+    testOption: () => testOption(path),
+    testHead: () => testHead(path),
+    testGet: id => (id ? testGet(`${path}/${id}`) : testGet(path)),
+    testPost: (data = {}) => testPost(path, data),
+    testPatch: (id, data = {}) => testPatch(`${path}/${id}`, data),
+    testPut: (id, data = {}) => testPut(`${path}/${id}`, data),
+    testDelete: id => testDelete(`${path}/${id}`),
     path,
   };
 };

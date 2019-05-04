@@ -52,8 +52,8 @@ describe('generic test helpers', () => {
   });
 
   it('should test patch request', done => {
-    app.patch('/v1/users', (req, res) => res.ok());
-    testPatch('/v1/users', { name: faker.name.findName() }).expect(200, done);
+    app.patch('/v1/users/:id', (req, res) => res.ok());
+    testPatch('/v1/users/1', { name: faker.name.findName() }).expect(200, done);
   });
 
   it('should test put request', done => {
@@ -62,8 +62,8 @@ describe('generic test helpers', () => {
   });
 
   it('should test put request', done => {
-    app.put('/v1/users', (req, res) => res.ok());
-    testPut('/v1/users', { name: faker.name.findName() }).expect(200, done);
+    app.put('/v1/users/:id', (req, res) => res.ok());
+    testPut('/v1/users/1', { name: faker.name.findName() }).expect(200, done);
   });
 
   it('should test delete request', done => {
@@ -72,8 +72,8 @@ describe('generic test helpers', () => {
   });
 
   it('should test post request', done => {
-    app.delete('/v1/users', (req, res) => res.ok());
-    testDelete('/v1/users').expect(200, done);
+    app.delete('/v1/users/:id', (req, res) => res.ok());
+    testDelete('/v1/users/1').expect(200, done);
   });
 
   it('should clear attached routers', () => {
