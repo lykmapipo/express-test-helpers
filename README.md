@@ -26,6 +26,22 @@ request.get('/user')
   });
 ```
 
+- With Mocha
+```js
+const { testRouter } = require('@lykmapipo/express-test-helpers');
+
+describe('GET /user', () => {
+    it('responds with json', done => {
+        const request = testRouter(router);
+        request
+            .get('/user')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(200, done);
+    });
+});
+```
+
 ## Testing
 
 - Clone this repository
