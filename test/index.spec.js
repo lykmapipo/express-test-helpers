@@ -1,4 +1,12 @@
-import { expect, sinon, chai, faker, spy } from '../src/index';
+import {
+  expect,
+  sinon,
+  chai,
+  faker,
+  spy,
+  testApp,
+  testRequest,
+} from '../src/index';
 
 describe('express-test-helpers', () => {
   it('should set test environment', () => {
@@ -35,5 +43,13 @@ describe('express-test-helpers', () => {
     expect(dialed).to.have.been.calledOnce;
 
     dialed.restore();
+  });
+
+  it('should expose generic test app', () => {
+    expect(testApp).to.exist;
+  });
+
+  it('should expose generic test request', () => {
+    expect(testRequest).to.exist;
   });
 });
