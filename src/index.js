@@ -65,7 +65,37 @@ export const testGet = path => {
   const request = testRequest().get(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
+  return request;
+};
 
+/**
+ * @function testPost
+ * @name testPost
+ * @description Create http get test request
+ * @param {String} path valid path under test
+ * @return {Function} valid supertest get request
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.1.0
+ * @version 0.1.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { testPost } = require('@lykmapipo/express-test-helpers');
+ *
+ * testPost('/user', {name: 'John Doe'})
+ *  .expect(201)
+ *  .end(function(err, res) {
+ *    if (err) throw err;
+ *  });
+ *
+ */
+export const testPost = (path, body) => {
+  const request = testRequest().post(path);
+  request.set('Accept', 'application/json');
+  request.set('Content-Type', 'application/json');
+  request.send(body);
   return request;
 };
 

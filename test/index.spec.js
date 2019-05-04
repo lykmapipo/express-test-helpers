@@ -7,6 +7,7 @@ import {
   testApp,
   testRequest,
   testGet,
+  testPost,
 } from '../src/index';
 
 describe('express-test-helpers', () => {
@@ -60,5 +61,10 @@ describe('express-test-helpers', () => {
   it('should expose test get request', done => {
     expect(testGet).to.exist.and.be.a('function');
     testGet('/user').expect(404, done);
+  });
+
+  it('should expose test post request', done => {
+    expect(testPost).to.exist.and.be.a('function');
+    testPost('/user', { name: faker.name.findName() }).expect(404, done);
   });
 });

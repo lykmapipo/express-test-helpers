@@ -13,12 +13,18 @@ $ npm install --save @lykmapipo/express-test-helpers
 
 ## Usage
 ```js
-const { testGet } = require('@lykmapipo/express-test-helpers');
+const { testGet, testPost } = require('@lykmapipo/express-test-helpers');
 
-testGet('/user')
+testGet('/v1/users')
     .expect('Content-Type', /json/)
-    .expect('Content-Length', '15')
     .expect(200)
+    .end(function(err, res) {
+        if (err) throw err;
+    });
+
+testPost('/v1/users', { name: 'John Doe' })
+    .expect('Content-Type', /json/)
+    .expect(201)
     .end(function(err, res) {
         if (err) throw err;
     });
@@ -28,10 +34,9 @@ testGet('/user')
 ```js
 const { testGet } = require('@lykmapipo/express-test-helpers');
 
-describe('GET /user', () => {
+describe('GET /v1/users', () => {
     it('responds with json', done => {
         testGet('/user')
-            .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200, done);
     });
