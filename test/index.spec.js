@@ -6,6 +6,7 @@ import {
   spy,
   testApp,
   testRequest,
+  testGet,
 } from '../src/index';
 
 describe('express-test-helpers', () => {
@@ -51,5 +52,9 @@ describe('express-test-helpers', () => {
 
   it('should expose generic test request', () => {
     expect(testRequest).to.exist;
+  });
+
+  it('should expose test get request', () => {
+    expect(testGet).to.exist;
   });
 });
