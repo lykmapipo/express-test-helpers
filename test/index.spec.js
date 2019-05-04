@@ -1,3 +1,4 @@
+import { mount, Router } from '@lykmapipo/express-common';
 import {
   expect,
   sinon,
@@ -16,7 +17,7 @@ import {
   testDelete,
 } from '../src/index';
 
-describe('express-test-helpers', () => {
+describe('test helpers', () => {
   beforeEach(() => clear());
 
   it('should set test environment', () => {
@@ -120,5 +121,14 @@ describe('express-test-helpers', () => {
   it('should expose test post request', done => {
     app.delete('/v1/users', (req, res) => res.ok());
     testDelete('/v1/users').expect(200, done);
+  });
+
+  it('should clear attached routers', () => {
+    const router = new Router({ version: '1.0.0' });
+    mount(router);
+    const beforeStack = app._router.stack;
+    clear();
+    const afterStack = app._router.stack;
+    expect(beforeStack.length).to.not.be.equal(afterStack.length);
   });
 });

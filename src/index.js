@@ -7,7 +7,7 @@ import {
   sinon,
   spy,
 } from '@lykmapipo/test-helpers';
-import { filter } from 'lodash';
+import { filter, has } from 'lodash';
 import { app, testApp } from '@lykmapipo/express-common';
 import supertest from 'supertest';
 
@@ -34,7 +34,8 @@ export const clear = () => {
     const filtered =
       stack.name !== 'notFound' &&
       stack.name !== 'errorHandler' &&
-      !stack.route;
+      !stack.route &&
+      !has(stack, 'handle.stack');
     return filtered;
   });
 };
