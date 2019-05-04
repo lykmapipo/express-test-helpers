@@ -18,14 +18,14 @@ const { testGet, testPost } = require('@lykmapipo/express-test-helpers');
 testGet('/v1/users')
     .expect('Content-Type', /json/)
     .expect(200)
-    .end(function(err, res) {
+    .end((err, res) => {
         if (err) throw err;
     });
 
 testPost('/v1/users', { name: 'John Doe' })
     .expect('Content-Type', /json/)
     .expect(201)
-    .end(function(err, res) {
+    .end((err, res) => {
         if (err) throw err;
     });
 ```
@@ -36,7 +36,7 @@ const { testGet } = require('@lykmapipo/express-test-helpers');
 
 describe('GET /v1/users', () => {
     it('responds with json', done => {
-        testGet('/user')
+        testGet('/v1/users')
             .expect('Content-Type', /json/)
             .expect(200, done);
     });

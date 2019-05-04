@@ -10,6 +10,7 @@ import {
   testPost,
   testPatch,
   testPut,
+  testDelete,
 } from '../src/index';
 
 describe('express-test-helpers', () => {
@@ -78,5 +79,10 @@ describe('express-test-helpers', () => {
   it('should expose test put request', done => {
     expect(testPut).to.exist.and.be.a('function');
     testPut('/user/1', { name: faker.name.findName() }).expect(404, done);
+  });
+
+  it('should expose test delete request', done => {
+    expect(testDelete).to.exist.and.be.a('function');
+    testDelete('/user/1').expect(404, done);
   });
 });

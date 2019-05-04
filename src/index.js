@@ -26,9 +26,9 @@ import supertest from 'supertest';
  * const { testRequest } = require('@lykmapipo/express-test-helpers');
  *
  * const request = testRequest();
- * request.get('/user')
+ * request.get('/users')
  *  .expect(200)
- *  .end(function(err, res) {
+ *  .end((err, res) => {
  *    if (err) throw err;
  *  });
  *
@@ -54,15 +54,15 @@ export const testRequest = () => {
  *
  * const { testGet } = require('@lykmapipo/express-test-helpers');
  *
- * testGet('/v1/user')
+ * testGet('/v1/users')
  *  .expect(200)
- *  .end(function(err, res) {
+ *  .end((err, res) => {
  *    if (err) throw err;
  *  });
  *
- * testGet('/v1/user/1')
+ * testGet('/v1/users/1')
  *  .expect(200)
- *  .end(function(err, res) {
+ *  .end((err, res) => {
  *    if (err) throw err;
  *  });
  *
@@ -90,9 +90,9 @@ export const testGet = path => {
  *
  * const { testPost } = require('@lykmapipo/express-test-helpers');
  *
- * testPost('/v1/user', {name: 'John Doe'})
+ * testPost('/v1/users', { name: 'John Doe', ... })
  *  .expect(201)
- *  .end(function(err, res) {
+ *  .end((err, res) => {
  *    if (err) throw err;
  *  });
  *
@@ -108,9 +108,9 @@ export const testPost = (path, body) => {
 /**
  * @function testPatch
  * @name testPatch
- * @description Create http get test request
+ * @description Create http patch test request
  * @param {String} path valid path under test
- * @return {Function} valid supertest post request
+ * @return {Function} valid supertest patch request
  * @author lally elias <lallyelias87@mail.com>
  * @license MIT
  * @since 0.1.0
@@ -121,9 +121,9 @@ export const testPost = (path, body) => {
  *
  * const { testPatch } = require('@lykmapipo/express-test-helpers');
  *
- * testPatch('/v1/user/1', {name: 'John Doe'})
+ * testPatch('/v1/users/1', { name: 'John Doe', ... })
  *  .expect(200)
- *  .end(function(err, res) {
+ *  .end((err, res) => {
  *    if (err) throw err;
  *  });
  *
@@ -139,9 +139,9 @@ export const testPatch = (path, body) => {
 /**
  * @function testPut
  * @name testPut
- * @description Create http get test request
+ * @description Create http put test request
  * @param {String} path valid path under test
- * @return {Function} valid supertest post request
+ * @return {Function} valid supertest put request
  * @author lally elias <lallyelias87@mail.com>
  * @license MIT
  * @since 0.1.0
@@ -152,9 +152,9 @@ export const testPatch = (path, body) => {
  *
  * const { testPut } = require('@lykmapipo/express-test-helpers');
  *
- * testPut('/v1/user/1', {name: 'John Doe'})
+ * testPut('/v1/users/1', { name: 'John Doe', ... })
  *  .expect(200)
- *  .end(function(err, res) {
+ *  .end((err, res) => {
  *    if (err) throw err;
  *  });
  *
@@ -164,6 +164,36 @@ export const testPut = (path, body) => {
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
   request.send(body);
+  return request;
+};
+
+/**
+ * @function testDelete
+ * @name testDelete
+ * @description Create http delete test request
+ * @param {String} path valid path under test
+ * @return {Function} valid supertest delete request
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.1.0
+ * @version 0.1.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { testDelete } = require('@lykmapipo/express-test-helpers');
+ *
+ * testDelete('/v1/users/1')
+ *  .expect(200)
+ *  .end((err, res) => {
+ *    if (err) throw err;
+ *  });
+ *
+ */
+export const testDelete = path => {
+  const request = testRequest().delete(path);
+  request.set('Accept', 'application/json');
+  request.set('Content-Type', 'application/json');
   return request;
 };
 
