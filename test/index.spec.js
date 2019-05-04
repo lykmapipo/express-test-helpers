@@ -97,13 +97,28 @@ describe('express-test-helpers', () => {
     testPatch('/v1/users/1', { name: faker.name.findName() }).expect(404, done);
   });
 
+  it('should expose test patch request', done => {
+    app.patch('/v1/users', (req, res) => res.ok());
+    testPatch('/v1/users', { name: faker.name.findName() }).expect(200, done);
+  });
+
   it('should expose test put request', done => {
     expect(testPut).to.exist.and.be.a('function');
     testPut('/v1/users/1', { name: faker.name.findName() }).expect(404, done);
   });
 
+  it('should expose test put request', done => {
+    app.put('/v1/users', (req, res) => res.ok());
+    testPut('/v1/users', { name: faker.name.findName() }).expect(200, done);
+  });
+
   it('should expose test delete request', done => {
     expect(testDelete).to.exist.and.be.a('function');
     testDelete('/v1/users/1').expect(404, done);
+  });
+
+  it('should expose test post request', done => {
+    app.delete('/v1/users', (req, res) => res.ok());
+    testDelete('/v1/users').expect(200, done);
   });
 });
