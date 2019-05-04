@@ -14,9 +14,12 @@ $ npm install --save @lykmapipo/express-test-helpers
 ## Usage
 ```js
 const { 
-  testGet, testPost, testPatch, 
+  app, testGet, testPost, testPatch, 
   testPut, testDelete, testOption, testHead 
 } = require('@lykmapipo/express-test-helpers');
+
+app.get('/v1/users', (req, res)=> { res.ok(); });
+app.post('/v1/users', (req, res)=> { res.created(); });
 
 testGet('/v1/users')
     .expect('Content-Type', /json/)
