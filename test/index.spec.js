@@ -8,6 +8,7 @@ import {
   testRequest,
   testGet,
   testPost,
+  testPatch,
 } from '../src/index';
 
 describe('express-test-helpers', () => {
@@ -66,5 +67,10 @@ describe('express-test-helpers', () => {
   it('should expose test post request', done => {
     expect(testPost).to.exist.and.be.a('function');
     testPost('/user', { name: faker.name.findName() }).expect(404, done);
+  });
+
+  it('should expose test patch request', done => {
+    expect(testPatch).to.exist.and.be.a('function');
+    testPatch('/user/1', { name: faker.name.findName() }).expect(404, done);
   });
 });
