@@ -7,6 +7,7 @@ import {
   testApp,
   testRequest,
   testOption,
+  testHead,
   testGet,
   testPost,
   testPatch,
@@ -65,6 +66,11 @@ describe('express-test-helpers', () => {
   it('should expose test option request', done => {
     expect(testOption).to.exist.and.be.a('function');
     testOption('/v1/users').expect(204, done);
+  });
+
+  it('should expose test head request', done => {
+    expect(testHead).to.exist.and.be.a('function');
+    testHead('/v1/users').expect(404, done);
   });
 
   it('should expose test get request', done => {
