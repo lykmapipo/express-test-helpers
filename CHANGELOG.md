@@ -1,3 +1,9 @@
+#### 0.1.1 (2019-05-05)
+
+##### Bug Fixes
+
+* **test-router:**  support router version if available ([a6885f7a](https://github.com/lykmapipo/express-test-helpers/commit/a6885f7ab0a878319729cafddcd8b2969ff2001a))
+
 #### 0.1.0 (2019-05-04)
 
 ##### Chores

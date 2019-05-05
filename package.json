@@ -1,6 +1,6 @@
 {
   "name": "@lykmapipo/express-test-helpers",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sensible test helpers for express",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -81,7 +81,7 @@
     "mocha": "^6.1.4",
     "prettier": "^1.17.0",
     "rimraf": "^2.6.3",
-    "rollup": "^1.11.2"
+    "rollup": "^1.11.3"
   },
   "peerDependencies": {},
   "dependencies": {
