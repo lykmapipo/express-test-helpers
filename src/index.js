@@ -368,7 +368,9 @@ export const testMiddleware = (...middlewares) => {
  *
  */
 export const testRouter = (resource, router) => {
-  const path = `/v1/${resource}`;
+  const path = router.version
+    ? `/${router.version}/${resource}`
+    : `/${resource}`;
   mount(router);
   return {
     testOption: () => testOption(path),
