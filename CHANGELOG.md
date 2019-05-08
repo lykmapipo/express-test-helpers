@@ -1,3 +1,9 @@
+#### 0.4.0 (2019-05-08)
+
+##### New Features
+
+*  add support to test nested resource routers ([ca35fbf2](https://github.com/lykmapipo/express-test-helpers/commit/ca35fbf2b1d13360be2c63425f5320b1077ae788))
+
 #### 0.3.0 (2019-05-08)
 
 ##### New Features

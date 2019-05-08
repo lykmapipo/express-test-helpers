@@ -370,7 +370,7 @@ export const testMiddleware = (...middlewares) => {
  *
  * const { testRouter } = require('@lykmapipo/express-test-helpers');
  *
- * const { testGet } = testRouter('/v1/users', router);
+ * const { testGet } = testRouter('users', router);
  *
  * testGet
  *  .expect(200)

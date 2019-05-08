@@ -4,6 +4,7 @@ import { filter, has, isPlainObject } from 'lodash';
 import { app, testApp, mount } from '@lykmapipo/express-common';
 export { all, app, del, get, patch, post, put, use } from '@lykmapipo/express-common';
 import supertest from 'supertest';
+import { compile } from 'path-to-regexp';
 
 /**
  * @function clear
@@ -351,7 +352,7 @@ const testMiddleware = (...middlewares) => {
  *
  * const { testRouter } = require('@lykmapipo/express-test-helpers');
  *
- * const { testGet } = testRouter('/v1/users', router);
+ * const { testGet } = testRouter('users', router);
  *
  * testGet
  *  .expect(200)
@@ -365,25 +366,40 @@ const testRouter = (optns, router) => {
   const options = isPlainObject(optns) ? optns : { resource: optns };
 
   // create paths
-  let { pathSingle = `/${options.resource}` } = options;
+  let { pathSingle = `/${options.resource}/:id` } = options;
   let { pathList = `/${options.resource}` } = options;
 
   // handle versioned router
-  pathSingle = router.version ? `/${router.version}/${pathSingle}` : pathSingle;
-  pathList = router.version ? `/${router.version}/${pathList}` : pathList;
+  pathSingle = compile(
+    router.version ? `/${router.version}${pathSingle}` : pathSingle
+  );
+  pathList = compile(
+    router.version ? `/${router.version}${pathList}` : pathList
+  );
 
   // mout router for testing
   mount(router);
 
+  // helpers
+  const param = val => (isPlainObject(val) ? val : { id: val });
+  const isSingle = val => {
+    const params = param(val);
+    const single = params && params.id;
+    return single;
+  };
+
   // pack test helpers
   return {
-    testOption: () => testOption(pathList),
-    testHead: () => testHead(pathList),
-    testGet: id => (id ? testGet(`${pathSingle}/${id}`) : testGet(pathList)),
-    testPost: (data = {}) => testPost(pathList, data),
-    testPatch: (id, data = {}) => testPatch(`${pathSingle}/${id}`, data),
-    testPut: (id, data = {}) => testPut(`${pathSingle}/${id}`, data),
-    testDelete: id => testDelete(`${pathSingle}/${id}`),
+    testOption: (params = {}) => testOption(pathList(params)),
+    testHead: (params = {}) => testHead(pathList(params)),
+    testGet: params =>
+      isSingle(params)
+        ? testGet(pathSingle(param(params)))
+        : testGet(pathList(param(params))),
+    testPost: (data = {}) => testPost(pathList(param(data)), data),
+    testPatch: (id, data = {}) => testPatch(pathSingle(param(id)), data),
+    testPut: (id, data = {}) => testPut(pathSingle(param(id)), data),
+    testDelete: id => testDelete(pathSingle(param(id))),
   };
 };
 
