@@ -9,7 +9,18 @@ import {
 } from '@lykmapipo/test-helpers';
 import uuidv1 from 'uuid/v1';
 import { filter, has } from 'lodash';
-import { app, mount, testApp } from '@lykmapipo/express-common';
+import {
+  all,
+  del,
+  get,
+  patch,
+  post,
+  put,
+  use,
+  app,
+  mount,
+  testApp,
+} from '@lykmapipo/express-common';
 import supertest from 'supertest';
 
 /**
@@ -384,4 +395,20 @@ export const testRouter = (resource, router) => {
   };
 };
 
-export { chai, expect, faker, mock, should, sinon, spy, app };
+export {
+  chai,
+  expect,
+  faker,
+  mock,
+  should,
+  sinon,
+  spy,
+  app,
+  all,
+  del,
+  get,
+  patch,
+  post,
+  put,
+  use,
+};
