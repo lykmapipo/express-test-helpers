@@ -8,7 +8,7 @@ import {
   spy,
 } from '@lykmapipo/test-helpers';
 import uuidv1 from 'uuid/v1';
-import { filter, has } from 'lodash';
+import { filter, has, isPlainObject } from 'lodash';
 import {
   all,
   del,
@@ -356,7 +356,7 @@ export const testMiddleware = (...middlewares) => {
  * @function testRouter
  * @name testRouter
  * @description Create test requests for express router
- * @param {String} resource valid express router mount path
+ * @param {Object|String} optns valid express router mount path or options
  * @param {Router} router valid express router
  * @return {Object} valid supertest requests
  * @author lally elias <lallyelias87@mail.com>
@@ -378,20 +378,30 @@ export const testMiddleware = (...middlewares) => {
  *  });
  *
  */
-export const testRouter = (resource, router) => {
-  const path = router.version
-    ? `/${router.version}/${resource}`
-    : `/${resource}`;
+export const testRouter = (optns, router) => {
+  // normalize options
+  const options = isPlainObject(optns) ? optns : { resource: optns };
+
+  // create paths
+  let { pathSingle = `/${options.resource}` } = options;
+  let { pathList = `/${options.resource}` } = options;
+
+  // handle versioned router
+  pathSingle = router.version ? `/${router.version}/${pathSingle}` : pathSingle;
+  pathList = router.version ? `/${router.version}/${pathList}` : pathList;
+
+  // mout router for testing
   mount(router);
+
+  // pack test helpers
   return {
-    testOption: () => testOption(path),
-    testHead: () => testHead(path),
-    testGet: id => (id ? testGet(`${path}/${id}`) : testGet(path)),
-    testPost: (data = {}) => testPost(path, data),
-    testPatch: (id, data = {}) => testPatch(`${path}/${id}`, data),
-    testPut: (id, data = {}) => testPut(`${path}/${id}`, data),
-    testDelete: id => testDelete(`${path}/${id}`),
-    path,
+    testOption: () => testOption(pathList),
+    testHead: () => testHead(pathList),
+    testGet: id => (id ? testGet(`${pathSingle}/${id}`) : testGet(pathList)),
+    testPost: (data = {}) => testPost(pathList, data),
+    testPatch: (id, data = {}) => testPatch(`${pathSingle}/${id}`, data),
+    testPut: (id, data = {}) => testPut(`${pathSingle}/${id}`, data),
+    testDelete: id => testDelete(`${pathSingle}/${id}`),
   };
 };
 
