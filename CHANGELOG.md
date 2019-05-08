@@ -1,3 +1,10 @@
+#### 0.1.3 (2019-05-08)
+
+##### Chores
+
+* **ci:**  add npm test script ([f9a6313c](https://github.com/lykmapipo/express-test-helpers/commit/f9a6313c91214b45388426fc32233158a2d0bc79))
+* **deps:**  force latest version & audit fix ([80369aa4](https://github.com/lykmapipo/express-test-helpers/commit/80369aa49d9a83c4f9154bdcfb8ba1067c1f2f3d))
+
 #### 0.1.2 (2019-05-05)
 
 ##### Chores
