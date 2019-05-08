@@ -1,3 +1,9 @@
+#### 0.2.0 (2019-05-08)
+
+##### New Features
+
+*  expose http verb shortcuts ([6d66506a](https://github.com/lykmapipo/express-test-helpers/commit/6d66506af931104c83cdd9c479e2c9b989edcd2f))
+
 #### 0.1.3 (2019-05-08)
 
 ##### Chores
