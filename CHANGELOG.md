@@ -1,3 +1,9 @@
+#### 0.3.0 (2019-05-08)
+
+##### New Features
+
+*  add support to paths on router for ([b483c7c6](https://github.com/lykmapipo/express-test-helpers/commit/b483c7c63c156fb70d4305808ee7c735d81971dd))
+
 #### 0.2.0 (2019-05-08)
 
 ##### New Features

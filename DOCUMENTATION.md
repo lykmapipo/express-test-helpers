@@ -371,7 +371,7 @@ testGet
 
 
 
-#### testRouter(resource, router) 
+#### testRouter(optns, router) 
 
 Create test requests for express router
 
@@ -382,7 +382,7 @@ Create test requests for express router
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| resource | `String`  | valid express router mount path | &nbsp; |
+| optns | `Object` `String`  | valid express router mount path or options | &nbsp; |
 | router | `Router`  | valid express router | &nbsp; |
 
 
