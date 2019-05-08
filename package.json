@@ -88,6 +88,7 @@
     "@lykmapipo/express-common": ">=0.17.0",
     "@lykmapipo/test-helpers": ">=0.2.2",
     "lodash": ">=4.17.11",
+    "path-to-regexp": ">=3.0.0",
     "supertest": ">=4.0.2",
     "uuid": ">=3.3.2"
   },

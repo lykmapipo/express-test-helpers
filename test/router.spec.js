@@ -1,7 +1,7 @@
 import { Router } from '@lykmapipo/express-common';
 import { clear, testRouter, faker } from '../src/index';
 
-describe('router test helpers', () => {
+describe('router test helpers - simple resource', () => {
   beforeEach(() => clear());
 
   const router = new Router({ version: '1.0.0' });
