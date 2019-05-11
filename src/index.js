@@ -432,14 +432,14 @@ export const testRouter = (optns, router) => {
 /**
  * @function testUpload
  * @name testUpload
- * @description Create http mutliparty post test request
+ * @description Create http multiparty post(upload) test request
  * @param {String} path valid path under test
  * @param {Object} body valid multiparty body
  * @param {Object} body.attach valid attachments
  * @return {Function} valid supertest multiparty post request
  * @author lally elias <lallyelias87@mail.com>
  * @license MIT
- * @since 0.1.0
+ * @since 0.6.0
  * @version 0.1.0
  * @static
  * @public
@@ -475,6 +475,57 @@ export const testUpload = (path, body = {}) => {
       request.attach(key, value);
     }
   });
+
+  // return request
+  return request;
+};
+
+/**
+ * @function testDownload
+ * @name testDownload
+ * @description Create http multiparty get(download) test request
+ * @param {String} path valid path under test
+ * @param {Object} optns valid options for test
+ * @param {Function} [optns.encoding=binary] valid file encoding used for
+ * parsing response body
+ * @return {Function} valid supertest get request
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.6.0
+ * @version 0.1.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { testDownload } = require('@lykmapipo/express-test-helpers');
+ *
+ * testDownload('/v1/files')
+ *  .expect(200)
+ *  .end((err, res) => {
+ *    if (err) throw err;
+ *  });
+ *
+ */
+export const testDownload = (path, optns = {}) => {
+  // obtain options
+  const { encoding = 'binary' } = optns;
+
+  // prepare response body parser
+  const parser = (response, cb) => {
+    response.setEncoding(encoding);
+    response.data = '';
+    response.on('data', chunk => {
+      response.data += chunk;
+    });
+    response.on('end', () => {
+      cb(null, Buffer.from(response.data, encoding));
+    });
+  };
+
+  // create request
+  const request = testRequest()
+    .get(path)
+    .parse(parser);
 
   // return request
   return request;

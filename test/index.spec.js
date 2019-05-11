@@ -1,3 +1,4 @@
+import { readFileSync } from 'fs';
 import multer from 'multer';
 import { mount, Router } from '@lykmapipo/express-common';
 import {
@@ -13,6 +14,7 @@ import {
   testPut,
   testDelete,
   testUpload,
+  testDownload,
 } from '../src/index';
 
 describe('generic test helpers', () => {
@@ -78,7 +80,7 @@ describe('generic test helpers', () => {
     testDelete('/v1/users/1').expect(200, done);
   });
 
-  it('should test get upload request', done => {
+  it('should test upload request', done => {
     const file = `${__dirname}/fixtures/test.txt`;
     const handleUpload = [
       multer({ dest: 'logs/' }).single('avatar'),
@@ -93,6 +95,23 @@ describe('generic test helpers', () => {
         expect(body.originalname).to.be.eql('test.txt');
         expect(body.mimetype).to.be.eql('text/plain');
         expect(body.caption).to.be.eql('avatar');
+        done(error, body);
+      });
+  });
+
+  it('should test download request', done => {
+    const file = `${__dirname}/fixtures/test.txt`;
+    const fileContent = readFileSync(file)
+      .toString('base64')
+      .substr(0, 12);
+    app.get('/v1/downloads', (req, res) => res.download(file));
+    testDownload('/v1/downloads')
+      .expect(200)
+      .expect('Content-Type', 'text/plain; charset=UTF-8')
+      .expect('Content-Disposition', 'attachment; filename="test.txt"')
+      .end((error, { body }) => {
+        expect(error).to.not.exist;
+        expect(body.toString('base64').substr(0, 12)).to.be.equal(fileContent);
         done(error, body);
       });
   });
