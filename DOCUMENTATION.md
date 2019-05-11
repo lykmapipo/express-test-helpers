@@ -1,3 +1,11 @@
+# [@lykmapipo/express-test-helpers](https://github.com/lykmapipo/express-test-helpers#readme) *0.7.0*
+
+> Sensible test helpers for express
+
+
+### lib/index.js
+
+
 #### clear() 
 
 Clear notFound, errorHandler and route handlers
@@ -359,47 +367,7 @@ const { testMiddleware } = require('@lykmapipo/express-test-helpers');
 
 const { testGet } = testMiddleware(ipFilter);
 
-testGet
- .expect(200)
- .end((err, res) => {
-   if (err) throw err;
- });
-```
-
-
-##### Returns
-
-
-- `Object`  valid supertest requests
-
-
-
-#### testRouter(optns, router) 
-
-Create test requests for express router
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| optns | `Object` `String`  | valid express router mount path or options | &nbsp; |
-| router | `Router`  | valid express router | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-const { testRouter } = require('@lykmapipo/express-test-helpers');
-
-const { testGet } = testRouter('users', router);
-
-testGet
+testGet()
  .expect(200)
  .end((err, res) => {
    if (err) throw err;
@@ -491,6 +459,46 @@ testDownload('/v1/files')
 
 
 - `Function`  valid supertest get request
+
+
+
+#### testRouter(optns, router) 
+
+Create test requests for express router
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| optns | `Object` `String`  | valid express router mount path or options | &nbsp; |
+| router | `Router`  | valid express router | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+const { testRouter } = require('@lykmapipo/express-test-helpers');
+
+const { testGet } = testRouter('users', router);
+
+testGet()
+ .expect(200)
+ .end((err, res) => {
+   if (err) throw err;
+ });
+```
+
+
+##### Returns
+
+
+- `Object`  valid supertest requests
 
 
 

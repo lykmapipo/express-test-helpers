@@ -333,7 +333,7 @@ export const testDelete = path => {
  *
  * const { testGet } = testMiddleware(ipFilter);
  *
- * testGet
+ * testGet()
  *  .expect(200)
  *  .end((err, res) => {
  *    if (err) throw err;
@@ -477,7 +477,7 @@ export const testDownload = (path, optns = {}) => {
  *
  * const { testGet } = testRouter('users', router);
  *
- * testGet
+ * testGet()
  *  .expect(200)
  *  .end((err, res) => {
  *    if (err) throw err;

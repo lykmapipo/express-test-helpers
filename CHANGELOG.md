@@ -1,3 +1,9 @@
+#### 0.7.0 (2019-05-11)
+
+##### New Features
+
+*  add shortcurt to test resource router exports ([5385dc6e](https://github.com/lykmapipo/express-test-helpers/commit/5385dc6e58b832c1a235f2dfd523ee2bd8ffea86))
+
 #### 0.6.0 (2019-05-11)
 
 ##### New Features
