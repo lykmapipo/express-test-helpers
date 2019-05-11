@@ -11,6 +11,7 @@
     "lint": "eslint --fix --ext .js src/ test/ rollup.config.js",
     "pretest": "npm run lint",
     "test": "NODE_ENV=test mocha --require @babel/register test/**/*.spec.js",
+    "posttest": "rimraf logs",
     "docs": "doxdox 'lib/**/*.js' -p package.json -l markdown -o DOCUMENTATION.md",
     "cmt": "git add -A && git-cz",
     "changelog": "changelog"
@@ -79,6 +80,7 @@
     "husky": "^2.2.0",
     "lint-staged": "^8.1.6",
     "mocha": "^6.1.4",
+    "multer": "^1.4.1",
     "prettier": "^1.17.0",
     "rimraf": "^2.6.3",
     "rollup": "^1.11.3"

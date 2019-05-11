@@ -1,3 +1,4 @@
+import multer from 'multer';
 import { mount, Router } from '@lykmapipo/express-common';
 import {
   expect,
@@ -11,6 +12,7 @@ import {
   testPatch,
   testPut,
   testDelete,
+  testUpload,
 } from '../src/index';
 
 describe('generic test helpers', () => {
@@ -74,6 +76,25 @@ describe('generic test helpers', () => {
   it('should test post request', done => {
     app.delete('/v1/users/:id', (req, res) => res.ok());
     testDelete('/v1/users/1').expect(200, done);
+  });
+
+  it('should test get upload request', done => {
+    const file = `${__dirname}/fixtures/test.txt`;
+    const handleUpload = [
+      multer({ dest: 'logs/' }).single('avatar'),
+      (req, res) => res.ok({ ...req.body, ...req.file }),
+    ];
+    app.post('/v1/uploads', handleUpload);
+    testUpload('/v1/uploads', { caption: 'avatar', attach: { avatar: file } })
+      .expect(200)
+      .end((error, { body }) => {
+        expect(error).to.not.exist;
+        expect(body.fieldname).to.be.eql('avatar');
+        expect(body.originalname).to.be.eql('test.txt');
+        expect(body.mimetype).to.be.eql('text/plain');
+        expect(body.caption).to.be.eql('avatar');
+        done(error, body);
+      });
   });
 
   it('should clear attached routers', () => {

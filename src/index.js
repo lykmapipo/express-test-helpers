@@ -1,3 +1,5 @@
+import { filter, forEach, has, isPlainObject } from 'lodash';
+import uuidv1 from 'uuid/v1';
 import {
   chai,
   expect,
@@ -7,8 +9,6 @@ import {
   sinon,
   spy,
 } from '@lykmapipo/test-helpers';
-import uuidv1 from 'uuid/v1';
-import { filter, has, isPlainObject } from 'lodash';
 import {
   all,
   del,
@@ -424,6 +424,57 @@ export const testRouter = (optns, router) => {
     testPut: (id, data = {}) => testPut(pathSingle(param(id)), data),
     testDelete: id => testDelete(pathSingle(param(id))),
   };
+};
+
+/**
+ * @function testUpload
+ * @name testUpload
+ * @description Create http mutliparty post test request
+ * @param {String} path valid path under test
+ * @param {Object} body valid multiparty body
+ * @param {Object} body.attach valid attachments
+ * @return {Function} valid supertest multiparty post request
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.1.0
+ * @version 0.1.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { testUpload } = require('@lykmapipo/express-test-helpers');
+ *
+ * const body =
+ *  ({ caption: 'Avatar', attach: { avatar: { file: './avatar.png' } } });
+ * testUpload('/v1/files', body)
+ *  .expect(201)
+ *  .end((err, res) => {
+ *    if (err) throw err;
+ *  });
+ *
+ */
+export const testUpload = (path, body = {}) => {
+  const request = testRequest().post(path);
+  const { attach, ...fields } = body;
+
+  // add fields
+  forEach(fields, (value, key) => request.field(key, value));
+
+  // add attachments
+  forEach(attach, (value, key) => {
+    // handle field name and options
+    if (isPlainObject(value)) {
+      const { file, ...fileOptions } = value;
+      request.attach(key, file, fileOptions);
+    }
+    // handle field name and file path
+    else {
+      request.attach(key, value);
+    }
+  });
+
+  // return request
+  return request;
 };
 
 export {
