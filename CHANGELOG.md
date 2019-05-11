@@ -1,3 +1,9 @@
+#### 0.5.0 (2019-05-11)
+
+##### New Features
+
+*  extend testRouter to handle schema test ([e203415f](https://github.com/lykmapipo/express-test-helpers/commit/e203415fb7e0fe1c28ae08939b187f303bf25c32))
+
 #### 0.4.1 (2019-05-08)
 
 ##### Chores
