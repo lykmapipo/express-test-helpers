@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { createReadStream, readFileSync } from 'fs';
 import multer from 'multer';
 import { mount, Router } from '@lykmapipo/express-common';
 import {
@@ -101,17 +101,38 @@ describe('generic test helpers', () => {
 
   it('should test download request', done => {
     const file = `${__dirname}/fixtures/test.txt`;
-    const fileContent = readFileSync(file)
-      .toString('base64')
-      .substr(0, 12);
+    const fileContent = readFileSync(file).toString('base64');
+
     app.get('/v1/downloads', (req, res) => res.download(file));
+
     testDownload('/v1/downloads')
       .expect(200)
       .expect('Content-Type', 'text/plain; charset=UTF-8')
       .expect('Content-Disposition', 'attachment; filename="test.txt"')
       .end((error, { body }) => {
         expect(error).to.not.exist;
-        expect(body.toString('base64').substr(0, 12)).to.be.equal(fileContent);
+        expect(body.toString('base64')).to.be.equal(fileContent);
+        done(error, body);
+      });
+  });
+
+  it('should test stream download request', done => {
+    const file = `${__dirname}/fixtures/test.txt`;
+    const fileContent = readFileSync(file).toString('base64');
+
+    app.get('/v1/streams', (req, res) => {
+      res.attachment('test.txt');
+      res.status(200);
+      createReadStream(file).pipe(res);
+    });
+
+    testDownload('/v1/streams')
+      .expect(200)
+      .expect('Content-Type', 'text/plain; charset=utf-8')
+      .expect('Content-Disposition', 'attachment; filename="test.txt"')
+      .end((error, { body }) => {
+        expect(error).to.not.exist;
+        expect(body.toString('base64')).to.be.equal(fileContent);
         done(error, body);
       });
   });
