@@ -194,6 +194,7 @@ export const testGet = path => {
  * @name testPost
  * @description Create http get test request
  * @param {String} path valid path under test
+ * @param {Object} [body={}] valid response body under test
  * @return {Function} valid supertest post request
  * @author lally elias <lallyelias87@mail.com>
  * @license MIT
@@ -212,7 +213,7 @@ export const testGet = path => {
  *  });
  *
  */
-export const testPost = (path, body) => {
+export const testPost = (path, body = {}) => {
   const request = testRequest().post(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -225,6 +226,7 @@ export const testPost = (path, body) => {
  * @name testPatch
  * @description Create http patch test request
  * @param {String} path valid path under test
+ * @param {Object} [body={}] valid response body under test
  * @return {Function} valid supertest patch request
  * @author lally elias <lallyelias87@mail.com>
  * @license MIT
@@ -243,7 +245,7 @@ export const testPost = (path, body) => {
  *  });
  *
  */
-export const testPatch = (path, body) => {
+export const testPatch = (path, body = {}) => {
   const request = testRequest().patch(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -256,6 +258,7 @@ export const testPatch = (path, body) => {
  * @name testPut
  * @description Create http put test request
  * @param {String} path valid path under test
+ * @param {Object} [body={}] valid response body under test
  * @return {Function} valid supertest put request
  * @author lally elias <lallyelias87@mail.com>
  * @license MIT
@@ -274,7 +277,7 @@ export const testPatch = (path, body) => {
  *  });
  *
  */
-export const testPut = (path, body) => {
+export const testPut = (path, body = {}) => {
   const request = testRequest().put(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
