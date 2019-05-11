@@ -1,3 +1,18 @@
+#### 0.6.0 (2019-05-11)
+
+##### New Features
+
+*  add testDownload helper ([037a0cf1](https://github.com/lykmapipo/express-test-helpers/commit/037a0cf1ddd845e6d725bddc3243af0dcee11c69))
+*  add testUpload helper ([29a4599e](https://github.com/lykmapipo/express-test-helpers/commit/29a4599e6f001acc0f3ee2f78c7dab551f29bc49))
+
+##### Code Style Changes
+
+*  improve testPost, testPatch & testBody jsdocs ([dd04df9a](https://github.com/lykmapipo/express-test-helpers/commit/dd04df9a261782ec82f55ba4a150ea11825123ab))
+
+##### Tests
+
+*  add stream test for testDownload ([b542f37b](https://github.com/lykmapipo/express-test-helpers/commit/b542f37b7eea4c5d138c14eb3f5119d9c2b22793))
+
 #### 0.5.0 (2019-05-11)
 
 ##### New Features

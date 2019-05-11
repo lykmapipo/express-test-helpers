@@ -1,6 +1,6 @@
-export { chai, expect, faker, mock, should, sinon, spy } from '@lykmapipo/test-helpers';
+import { filter, has, isPlainObject, forEach } from 'lodash';
 import uuidv1 from 'uuid/v1';
-import { filter, has, isPlainObject } from 'lodash';
+export { chai, expect, faker, mock, should, sinon, spy } from '@lykmapipo/test-helpers';
 import { app, testApp, mount } from '@lykmapipo/express-common';
 export { all, app, del, get, patch, post, put, use } from '@lykmapipo/express-common';
 import supertest from 'supertest';
@@ -176,6 +176,7 @@ const testGet = path => {
  * @name testPost
  * @description Create http get test request
  * @param {String} path valid path under test
+ * @param {Object} [body={}] valid response body under test
  * @return {Function} valid supertest post request
  * @author lally elias <lallyelias87@mail.com>
  * @license MIT
@@ -194,7 +195,7 @@ const testGet = path => {
  *  });
  *
  */
-const testPost = (path, body) => {
+const testPost = (path, body = {}) => {
   const request = testRequest().post(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -207,6 +208,7 @@ const testPost = (path, body) => {
  * @name testPatch
  * @description Create http patch test request
  * @param {String} path valid path under test
+ * @param {Object} [body={}] valid response body under test
  * @return {Function} valid supertest patch request
  * @author lally elias <lallyelias87@mail.com>
  * @license MIT
@@ -225,7 +227,7 @@ const testPost = (path, body) => {
  *  });
  *
  */
-const testPatch = (path, body) => {
+const testPatch = (path, body = {}) => {
   const request = testRequest().patch(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -238,6 +240,7 @@ const testPatch = (path, body) => {
  * @name testPut
  * @description Create http put test request
  * @param {String} path valid path under test
+ * @param {Object} [body={}] valid response body under test
  * @return {Function} valid supertest put request
  * @author lally elias <lallyelias87@mail.com>
  * @license MIT
@@ -256,7 +259,7 @@ const testPatch = (path, body) => {
  *  });
  *
  */
-const testPut = (path, body) => {
+const testPut = (path, body = {}) => {
   const request = testRequest().put(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -408,4 +411,106 @@ const testRouter = (optns, router) => {
   };
 };
 
-export { clear, testDelete, testGet, testHead, testMiddleware, testOption, testPatch, testPost, testPut, testRequest, testRouter };
+/**
+ * @function testUpload
+ * @name testUpload
+ * @description Create http multiparty post(upload) test request
+ * @param {String} path valid path under test
+ * @param {Object} body valid multiparty body
+ * @param {Object} body.attach valid attachments
+ * @return {Function} valid supertest multiparty post request
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.6.0
+ * @version 0.1.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { testUpload } = require('@lykmapipo/express-test-helpers');
+ *
+ * const body =
+ *  ({ caption: 'Avatar', attach: { avatar: { file: './avatar.png' } } });
+ * testUpload('/v1/files', body)
+ *  .expect(201)
+ *  .end((err, res) => {
+ *    if (err) throw err;
+ *  });
+ *
+ */
+const testUpload = (path, body = {}) => {
+  const request = testRequest().post(path);
+  const { attach, ...fields } = body;
+
+  // add fields
+  forEach(fields, (value, key) => request.field(key, value));
+
+  // add attachments
+  forEach(attach, (value, key) => {
+    // handle field name and options
+    if (isPlainObject(value)) {
+      const { file, ...fileOptions } = value;
+      request.attach(key, file, fileOptions);
+    }
+    // handle field name and file path
+    else {
+      request.attach(key, value);
+    }
+  });
+
+  // return request
+  return request;
+};
+
+/**
+ * @function testDownload
+ * @name testDownload
+ * @description Create http multiparty get(download) test request
+ * @param {String} path valid path under test
+ * @param {Object} optns valid options for test
+ * @param {Function} [optns.encoding=binary] valid file encoding used for
+ * parsing response body
+ * @return {Function} valid supertest get request
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.6.0
+ * @version 0.1.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { testDownload } = require('@lykmapipo/express-test-helpers');
+ *
+ * testDownload('/v1/files')
+ *  .expect(200)
+ *  .end((err, res) => {
+ *    if (err) throw err;
+ *  });
+ *
+ */
+const testDownload = (path, optns = {}) => {
+  // obtain options
+  const { encoding = 'binary' } = optns;
+
+  // prepare response body parser
+  const parser = (response, cb) => {
+    response.setEncoding(encoding);
+    response.data = '';
+    response.on('data', chunk => {
+      response.data += chunk;
+    });
+    response.on('end', () => {
+      cb(null, Buffer.from(response.data, encoding));
+    });
+  };
+
+  // create request
+  const request = testRequest()
+    .get(path)
+    .parse(parser);
+
+  // return request
+  return request;
+};
+
+export { clear, testDelete, testDownload, testGet, testHead, testMiddleware, testOption, testPatch, testPost, testPut, testRequest, testRouter, testUpload };

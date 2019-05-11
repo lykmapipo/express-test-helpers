@@ -184,7 +184,7 @@ testGet('/v1/users/1')
 
 
 
-#### testPost(path) 
+#### testPost(path[, body&#x3D;{}]) 
 
 Create http get test request
 
@@ -196,6 +196,7 @@ Create http get test request
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
 | path | `String`  | valid path under test | &nbsp; |
+| body&#x3D;{} | `Object`  | valid response body under test | *Optional* |
 
 
 
@@ -221,7 +222,7 @@ testPost('/v1/users', { name: 'John Doe', ... })
 
 
 
-#### testPatch(path) 
+#### testPatch(path[, body&#x3D;{}]) 
 
 Create http patch test request
 
@@ -233,6 +234,7 @@ Create http patch test request
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
 | path | `String`  | valid path under test | &nbsp; |
+| body&#x3D;{} | `Object`  | valid response body under test | *Optional* |
 
 
 
@@ -258,7 +260,7 @@ testPatch('/v1/users/1', { name: 'John Doe', ... })
 
 
 
-#### testPut(path) 
+#### testPut(path[, body&#x3D;{}]) 
 
 Create http put test request
 
@@ -270,6 +272,7 @@ Create http put test request
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
 | path | `String`  | valid path under test | &nbsp; |
+| body&#x3D;{} | `Object`  | valid response body under test | *Optional* |
 
 
 
@@ -408,6 +411,86 @@ testGet
 
 
 - `Object`  valid supertest requests
+
+
+
+#### testUpload(path, body) 
+
+Create http multiparty post(upload) test request
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| path | `String`  | valid path under test | &nbsp; |
+| body | `Object`  | valid multiparty body | &nbsp; |
+| body.attach | `Object`  | valid attachments | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+const { testUpload } = require('@lykmapipo/express-test-helpers');
+
+const body =
+ ({ caption: 'Avatar', attach: { avatar: { file: './avatar.png' } } });
+testUpload('/v1/files', body)
+ .expect(201)
+ .end((err, res) => {
+   if (err) throw err;
+ });
+```
+
+
+##### Returns
+
+
+- `Function`  valid supertest multiparty post request
+
+
+
+#### testDownload(path, optns) 
+
+Create http multiparty get(download) test request
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| path | `String`  | valid path under test | &nbsp; |
+| optns | `Object`  | valid options for test | &nbsp; |
+| optns.encoding&#x3D;binary | `Function`  | valid file encoding used for parsing response body | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+
+const { testDownload } = require('@lykmapipo/express-test-helpers');
+
+testDownload('/v1/files')
+ .expect(200)
+ .end((err, res) => {
+   if (err) throw err;
+ });
+```
+
+
+##### Returns
+
+
+- `Function`  valid supertest get request
 
 
 
