@@ -7,10 +7,12 @@ describe('routerFor - nested resources', () => {
   const paths = {
     pathSingle: '/users/:user/comments/:id',
     pathList: '/users/:user/comments',
+    pathSchema: '/users/:user/comments/schema',
   };
 
   const router = new Router({ version: '1.0.0' });
   router.get('/users/:user/comments', (req, res) => res.ok());
+  router.get('/users/:user/comments/schema', (req, res) => res.ok());
   router.get('/users/:user/comments/:id', (req, res) => res.ok());
   router.post('/users/:user/comments', (req, res) => res.created());
   router.put('/users/:user/comments/:id', (req, res) => res.ok());
@@ -20,6 +22,11 @@ describe('routerFor - nested resources', () => {
   it('should handle http GET /resource/:id/resource', done => {
     const { testGet } = testRouter(paths, router);
     testGet({ user: 1 }).expect(200, done);
+  });
+
+  it('should handle http GET /resource/:id/resource/schema', done => {
+    const { testGetSchema } = testRouter(paths, router);
+    testGetSchema({ user: 1 }).expect(200, done);
   });
 
   it('should handle http GET /resource/:id/resource/:id', done => {

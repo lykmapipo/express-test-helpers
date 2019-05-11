@@ -363,7 +363,7 @@ export const testMiddleware = (...middlewares) => {
  * @author lally elias <lallyelias87@mail.com>
  * @license MIT
  * @since 0.1.0
- * @version 0.1.0
+ * @version 0.2.0
  * @static
  * @public
  * @example
@@ -386,6 +386,7 @@ export const testRouter = (optns, router) => {
   // create paths
   let { pathSingle = `/${options.resource}/:id` } = options;
   let { pathList = `/${options.resource}` } = options;
+  let { pathSchema = `/${options.resource}/schema` } = options;
 
   // handle versioned router
   pathSingle = compilePath(
@@ -393,6 +394,9 @@ export const testRouter = (optns, router) => {
   );
   pathList = compilePath(
     router.version ? `/${router.version}${pathList}` : pathList
+  );
+  pathSchema = compilePath(
+    router.version ? `/${router.version}${pathSchema}` : pathSchema
   );
 
   // mout router for testing
@@ -410,10 +414,11 @@ export const testRouter = (optns, router) => {
   return {
     testOption: (params = {}) => testOption(pathList(params)),
     testHead: (params = {}) => testHead(pathList(params)),
-    testGet: params =>
+    testGet: (params = {}) =>
       isSingle(params)
         ? testGet(pathSingle(param(params)))
         : testGet(pathList(param(params))),
+    testGetSchema: (params = {}) => testGet(pathSchema(param(params))),
     testPost: (data = {}) => testPost(pathList(param(data)), data),
     testPatch: (id, data = {}) => testPatch(pathSingle(param(id)), data),
     testPut: (id, data = {}) => testPut(pathSingle(param(id)), data),

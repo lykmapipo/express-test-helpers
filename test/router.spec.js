@@ -6,6 +6,7 @@ describe('router test helpers - simple resource', () => {
 
   const router = new Router({ version: '1.0.0' });
   router.get('/users', (req, res) => res.ok());
+  router.get('/users/schema', (req, res) => res.ok());
   router.get('/users/:id', (req, res) => res.ok());
   router.post('/users', (req, res) => res.created());
   router.put('/users/:id', (req, res) => res.ok());
@@ -15,6 +16,11 @@ describe('router test helpers - simple resource', () => {
   it('should work on get', done => {
     const { testGet } = testRouter('users', router);
     testGet().expect(200, done);
+  });
+
+  it('should work on get schema', done => {
+    const { testGetSchema } = testRouter('users', router);
+    testGetSchema().expect(200, done);
   });
 
   it('should work on get single', done => {
