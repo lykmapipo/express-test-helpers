@@ -4,9 +4,12 @@ import { clear, testRouter, faker } from '../src/index';
 describe('router test helpers - simple resource', () => {
   beforeEach(() => clear());
 
+  const file = `${__dirname}/fixtures/test.txt`;
+
   const router = new Router({ version: '1.0.0' });
   router.get('/users', (req, res) => res.ok());
   router.get('/users/schema', (req, res) => res.ok());
+  router.get('/users/export', (req, res) => res.download(file));
   router.get('/users/:id', (req, res) => res.ok());
   router.post('/users', (req, res) => res.created());
   router.put('/users/:id', (req, res) => res.ok());
@@ -21,6 +24,14 @@ describe('router test helpers - simple resource', () => {
   it('should work on get schema', done => {
     const { testGetSchema } = testRouter('users', router);
     testGetSchema().expect(200, done);
+  });
+
+  it('should work on get export', done => {
+    const { testGetExport } = testRouter('users', router);
+    testGetExport()
+      .expect('Content-Type', 'text/plain; charset=UTF-8')
+      .expect('Content-Disposition', 'attachment; filename="test.txt"')
+      .expect(200, done);
   });
 
   it('should work on get single', done => {

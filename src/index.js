@@ -357,79 +357,6 @@ export const testMiddleware = (...middlewares) => {
 };
 
 /**
- * @function testRouter
- * @name testRouter
- * @description Create test requests for express router
- * @param {Object|String} optns valid express router mount path or options
- * @param {Router} router valid express router
- * @return {Object} valid supertest requests
- * @author lally elias <lallyelias87@mail.com>
- * @license MIT
- * @since 0.1.0
- * @version 0.2.0
- * @static
- * @public
- * @example
- *
- * const { testRouter } = require('@lykmapipo/express-test-helpers');
- *
- * const { testGet } = testRouter('users', router);
- *
- * testGet
- *  .expect(200)
- *  .end((err, res) => {
- *    if (err) throw err;
- *  });
- *
- */
-export const testRouter = (optns, router) => {
-  // normalize options
-  const options = isPlainObject(optns) ? optns : { resource: optns };
-
-  // create paths
-  let { pathSingle = `/${options.resource}/:id` } = options;
-  let { pathList = `/${options.resource}` } = options;
-  let { pathSchema = `/${options.resource}/schema` } = options;
-
-  // handle versioned router
-  pathSingle = compilePath(
-    router.version ? `/${router.version}${pathSingle}` : pathSingle
-  );
-  pathList = compilePath(
-    router.version ? `/${router.version}${pathList}` : pathList
-  );
-  pathSchema = compilePath(
-    router.version ? `/${router.version}${pathSchema}` : pathSchema
-  );
-
-  // mout router for testing
-  mount(router);
-
-  // helpers
-  const param = val => (isPlainObject(val) ? val : { id: val });
-  const isSingle = val => {
-    const params = param(val);
-    const single = params && params.id;
-    return single;
-  };
-
-  // pack test helpers
-  return {
-    testOption: (params = {}) => testOption(pathList(params)),
-    testHead: (params = {}) => testHead(pathList(params)),
-    testGet: (params = {}) =>
-      isSingle(params)
-        ? testGet(pathSingle(param(params)))
-        : testGet(pathList(param(params))),
-    testGetSchema: (params = {}) => testGet(pathSchema(param(params))),
-    testPost: (data = {}) => testPost(pathList(param(data)), data),
-    testPatch: (id, data = {}) => testPatch(pathSingle(param(id)), data),
-    testPut: (id, data = {}) => testPut(pathSingle(param(id)), data),
-    testDelete: id => testDelete(pathSingle(param(id))),
-  };
-};
-
-/**
  * @function testUpload
  * @name testUpload
  * @description Create http multiparty post(upload) test request
@@ -529,6 +456,84 @@ export const testDownload = (path, optns = {}) => {
 
   // return request
   return request;
+};
+
+/**
+ * @function testRouter
+ * @name testRouter
+ * @description Create test requests for express router
+ * @param {Object|String} optns valid express router mount path or options
+ * @param {Router} router valid express router
+ * @return {Object} valid supertest requests
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.1.0
+ * @version 0.3.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { testRouter } = require('@lykmapipo/express-test-helpers');
+ *
+ * const { testGet } = testRouter('users', router);
+ *
+ * testGet
+ *  .expect(200)
+ *  .end((err, res) => {
+ *    if (err) throw err;
+ *  });
+ *
+ */
+export const testRouter = (optns, router) => {
+  // normalize options
+  const options = isPlainObject(optns) ? optns : { resource: optns };
+
+  // create paths
+  let { pathSingle = `/${options.resource}/:id` } = options;
+  let { pathList = `/${options.resource}` } = options;
+  let { pathSchema = `/${options.resource}/schema` } = options;
+  let { pathExport = `/${options.resource}/export` } = options;
+
+  // handle versioned router
+  pathSingle = compilePath(
+    router.version ? `/${router.version}${pathSingle}` : pathSingle
+  );
+  pathList = compilePath(
+    router.version ? `/${router.version}${pathList}` : pathList
+  );
+  pathSchema = compilePath(
+    router.version ? `/${router.version}${pathSchema}` : pathSchema
+  );
+  pathExport = compilePath(
+    router.version ? `/${router.version}${pathExport}` : pathExport
+  );
+
+  // mout router for testing
+  mount(router);
+
+  // helpers
+  const param = val => (isPlainObject(val) ? val : { id: val });
+  const isSingle = val => {
+    const params = param(val);
+    const single = params && params.id;
+    return single;
+  };
+
+  // pack test helpers
+  return {
+    testOption: (params = {}) => testOption(pathList(params)),
+    testHead: (params = {}) => testHead(pathList(params)),
+    testGet: (params = {}) =>
+      isSingle(params)
+        ? testGet(pathSingle(param(params)))
+        : testGet(pathList(param(params))),
+    testGetSchema: (params = {}) => testGet(pathSchema(param(params))),
+    testGetExport: (params = {}) => testDownload(pathExport(param(params))),
+    testPost: (data = {}) => testPost(pathList(param(data)), data),
+    testPatch: (id, data = {}) => testPatch(pathSingle(param(id)), data),
+    testPut: (id, data = {}) => testPut(pathSingle(param(id)), data),
+    testDelete: id => testDelete(pathSingle(param(id))),
+  };
 };
 
 export {

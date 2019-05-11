@@ -4,15 +4,18 @@ import { clear, testRouter, faker } from '../src/index';
 describe('routerFor - nested resources', () => {
   beforeEach(() => clear());
 
+  const file = `${__dirname}/fixtures/test.txt`;
   const paths = {
     pathSingle: '/users/:user/comments/:id',
     pathList: '/users/:user/comments',
     pathSchema: '/users/:user/comments/schema',
+    pathExport: '/users/:user/comments/export',
   };
 
   const router = new Router({ version: '1.0.0' });
   router.get('/users/:user/comments', (req, res) => res.ok());
   router.get('/users/:user/comments/schema', (req, res) => res.ok());
+  router.get('/users/:user/comments/export', (req, res) => res.download(file));
   router.get('/users/:user/comments/:id', (req, res) => res.ok());
   router.post('/users/:user/comments', (req, res) => res.created());
   router.put('/users/:user/comments/:id', (req, res) => res.ok());
@@ -27,6 +30,14 @@ describe('routerFor - nested resources', () => {
   it('should handle http GET /resource/:id/resource/schema', done => {
     const { testGetSchema } = testRouter(paths, router);
     testGetSchema({ user: 1 }).expect(200, done);
+  });
+
+  it('should handle http GET /resource/:id/resource/export', done => {
+    const { testGetExport } = testRouter(paths, router);
+    testGetExport({ user: 1 })
+      .expect('Content-Type', 'text/plain; charset=UTF-8')
+      .expect('Content-Disposition', 'attachment; filename="test.txt"')
+      .expect(200, done);
   });
 
   it('should handle http GET /resource/:id/resource/:id', done => {
