@@ -459,6 +459,34 @@ export const testDownload = (path, optns = {}) => {
 };
 
 /**
+ * @function testStream
+ * @name testStream
+ * @description Create http multiparty stream test request
+ * @param {String} path valid path under test
+ * @param {Object} optns valid options for test
+ * @param {Function} [optns.encoding=binary] valid file encoding used for
+ * parsing response body
+ * @return {Function} valid supertest get request
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 0.8.0
+ * @version 0.1.0
+ * @static
+ * @public
+ * @example
+ *
+ * const { testStream } = require('@lykmapipo/express-test-helpers');
+ *
+ * testStream('/v1/files')
+ *  .expect(200)
+ *  .end((err, res) => {
+ *    if (err) throw err;
+ *  });
+ *
+ */
+export const testStream = testDownload;
+
+/**
  * @function testRouter
  * @name testRouter
  * @description Create test requests for express router
@@ -493,6 +521,9 @@ export const testRouter = (optns, router) => {
   let { pathList = `/${options.resource}` } = options;
   let { pathSchema = `/${options.resource}/schema` } = options;
   let { pathExport = `/${options.resource}/export` } = options;
+  let { pathUpload = `/${options.resource}/upload` } = options;
+  let { pathDownload = `/${options.resource}/download` } = options;
+  let { pathStream = `/${options.resource}/stream` } = options;
 
   // handle versioned router
   pathSingle = compilePath(
@@ -506,6 +537,15 @@ export const testRouter = (optns, router) => {
   );
   pathExport = compilePath(
     router.version ? `/${router.version}${pathExport}` : pathExport
+  );
+  pathUpload = compilePath(
+    router.version ? `/${router.version}${pathUpload}` : pathUpload
+  );
+  pathDownload = compilePath(
+    router.version ? `/${router.version}${pathDownload}` : pathDownload
+  );
+  pathStream = compilePath(
+    router.version ? `/${router.version}${pathStream}` : pathStream
   );
 
   // mout router for testing
@@ -529,6 +569,10 @@ export const testRouter = (optns, router) => {
         : testGet(pathList(param(params))),
     testGetSchema: (params = {}) => testGet(pathSchema(param(params))),
     testGetExport: (params = {}) => testDownload(pathExport(param(params))),
+    testExport: (params = {}) => testDownload(pathExport(param(params))),
+    testDownload: (params = {}) => testDownload(pathDownload(param(params))),
+    testStream: (params = {}) => testStream(pathStream(param(params))),
+    testUpload: (data = {}) => testUpload(pathUpload(param(data)), data),
     testPost: (data = {}) => testPost(pathList(param(data)), data),
     testPatch: (id, data = {}) => testPatch(pathSingle(param(id)), data),
     testPut: (id, data = {}) => testPut(pathSingle(param(id)), data),

@@ -15,6 +15,7 @@ import {
   testDelete,
   testUpload,
   testDownload,
+  testStream,
 } from '../src/index';
 
 describe('generic test helpers', () => {
@@ -130,6 +131,26 @@ describe('generic test helpers', () => {
       .expect(200)
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect('Content-Disposition', 'attachment; filename="test.txt"')
+      .end((error, { body }) => {
+        expect(error).to.not.exist;
+        expect(body.toString('base64')).to.be.equal(fileContent);
+        done(error, body);
+      });
+  });
+
+  it('should test stream request', done => {
+    const file = `${__dirname}/fixtures/test.txt`;
+    const fileContent = readFileSync(file).toString('base64');
+
+    app.get('/v1/streams', (req, res) => {
+      res.type('test.txt');
+      res.status(200);
+      createReadStream(file).pipe(res);
+    });
+
+    testStream('/v1/streams')
+      .expect(200)
+      .expect('Content-Type', 'text/plain; charset=utf-8')
       .end((error, { body }) => {
         expect(error).to.not.exist;
         expect(body.toString('base64')).to.be.equal(fileContent);
