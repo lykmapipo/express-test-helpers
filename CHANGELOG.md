@@ -1,3 +1,9 @@
+#### 0.8.0 (2019-06-02)
+
+##### New Features
+
+*  implement testUpload, testStream and testDownload test helpers ([ee7b1303](https://github.com/lykmapipo/express-test-helpers/commit/ee7b1303d3f83562c0d58db13545a22535231c1e))
+
 #### 0.7.3 (2019-06-02)
 
 ##### Chores

@@ -1,11 +1,3 @@
-# [@lykmapipo/express-test-helpers](https://github.com/lykmapipo/express-test-helpers#readme) *0.7.0*
-
-> Sensible test helpers for express
-
-
-### lib/index.js
-
-
 #### clear() 
 
 Clear notFound, errorHandler and route handlers
@@ -448,6 +440,45 @@ Create http multiparty get(download) test request
 const { testDownload } = require('@lykmapipo/express-test-helpers');
 
 testDownload('/v1/files')
+ .expect(200)
+ .end((err, res) => {
+   if (err) throw err;
+ });
+```
+
+
+##### Returns
+
+
+- `Function`  valid supertest get request
+
+
+
+#### testStream(path, optns) 
+
+Create http multiparty stream test request
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| path | `String`  | valid path under test | &nbsp; |
+| optns | `Object`  | valid options for test | &nbsp; |
+| optns.encoding&#x3D;binary | `Function`  | valid file encoding used for parsing response body | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+
+const { testStream } = require('@lykmapipo/express-test-helpers');
+
+testStream('/v1/files')
  .expect(200)
  .end((err, res) => {
    if (err) throw err;
