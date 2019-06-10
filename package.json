@@ -77,18 +77,19 @@
     "eslint-plugin-mocha": "^5.3.0",
     "eslint-plugin-prettier": "^3.1.0",
     "generate-changelog": "^1.7.1",
+    "handlebars": "^4.1.2",
     "husky": "^2.4.0",
     "lint-staged": "^8.2.0",
     "mocha": "^6.1.4",
     "multer": "^1.4.1",
-    "prettier": "^1.17.1",
+    "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
-    "rollup": "^1.14.2"
+    "rollup": "^1.14.5"
   },
   "peerDependencies": {},
   "dependencies": {
-    "@lykmapipo/express-common": ">=0.17.5",
-    "@lykmapipo/test-helpers": ">=0.2.5",
+    "@lykmapipo/express-common": ">=0.17.6",
+    "@lykmapipo/test-helpers": ">=0.2.7",
     "lodash": ">=4.17.11",
     "path-to-regexp": ">=3.0.0",
     "supertest": ">=4.0.2",
