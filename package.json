@@ -88,8 +88,8 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "@lykmapipo/express-common": ">=0.17.7",
-    "@lykmapipo/test-helpers": ">=0.2.8",
+    "@lykmapipo/express-common": ">=0.17.8",
+    "@lykmapipo/test-helpers": ">=0.2.9",
     "lodash": ">=4.17.11",
     "path-to-regexp": ">=3.0.0",
     "supertest": ">=4.0.2",
