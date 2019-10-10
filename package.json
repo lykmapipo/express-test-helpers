@@ -1,6 +1,6 @@
 {
   "name": "@lykmapipo/express-test-helpers",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "description": "Sensible test helpers for express",
   "main": "lib/index.js",
   "module": "es/index.js",
