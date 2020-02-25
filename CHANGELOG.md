@@ -1,3 +1,13 @@
+#### 0.8.18 (2020-02-25)
+
+##### Chores
+
+* **deps:**  force latest version & audit fix ([3876cf40](https://github.com/lykmapipo/express-test-helpers/commit/3876cf408d77f955682dc5931e2cd88fdacb3016))
+
+##### New Features
+
+*  expose mount router helper ([cd718615](https://github.com/lykmapipo/express-test-helpers/commit/cd718615bffaf240a6cfd0f439b548e06f85a66b))
+
 #### 0.8.17 (2020-02-16)
 
 ##### Chores
