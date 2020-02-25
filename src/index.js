@@ -596,4 +596,5 @@ export {
   post,
   put,
   use,
+  mount,
 };
