@@ -1,3 +1,9 @@
+#### 0.8.21 (2020-03-30)
+
+##### Chores
+
+* **deps:**  force latest version & audit fix ([b5631b0e](https://github.com/lykmapipo/express-test-helpers/commit/b5631b0ef4ba4a1779252ba3fe5232226d1079d9))
+
 #### 0.8.20 (2020-03-06)
 
 ##### Chores

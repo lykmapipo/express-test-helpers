@@ -42,17 +42,17 @@ describe('routerFor - nested resources', () => {
   router.patch('/users/:user/comments/:id', (req, res) => res.ok());
   router.delete('/users/:user/comments/:id', (req, res) => res.ok());
 
-  it('should handle http GET /resource/:id/resource', done => {
+  it('should handle http GET /resource/:id/resource', (done) => {
     const { testGet } = testRouter(paths, router);
     testGet({ user: 1 }).expect(200, done);
   });
 
-  it('should handle http GET /resource/:id/resource/schema', done => {
+  it('should handle http GET /resource/:id/resource/schema', (done) => {
     const { testGetSchema } = testRouter(paths, router);
     testGetSchema({ user: 1 }).expect(200, done);
   });
 
-  it('should handle http GET /resource/:id/resource/export', done => {
+  it('should handle http GET /resource/:id/resource/export', (done) => {
     const { testGetExport } = testRouter(paths, router);
     testGetExport({ user: 1 })
       .expect('Content-Type', 'text/plain; charset=UTF-8')
@@ -60,7 +60,7 @@ describe('routerFor - nested resources', () => {
       .expect(200, done);
   });
 
-  it('should handle http GET /resource/:id/resource/export', done => {
+  it('should handle http GET /resource/:id/resource/export', (done) => {
     const { testExport } = testRouter(paths, router);
     testExport({ user: 1 })
       .expect('Content-Type', 'text/plain; charset=UTF-8')
@@ -68,7 +68,7 @@ describe('routerFor - nested resources', () => {
       .expect(200, done);
   });
 
-  it('should work on get download', done => {
+  it('should work on get download', (done) => {
     const { testDownload } = testRouter(paths, router);
     testDownload({ user: 1 })
       .expect('Content-Type', 'text/plain; charset=UTF-8')
@@ -76,7 +76,7 @@ describe('routerFor - nested resources', () => {
       .expect(200, done);
   });
 
-  it('should work on get stream', done => {
+  it('should work on get stream', (done) => {
     const fileContent = readFileSync(file).toString('base64');
     const { testStream } = testRouter(paths, router);
     testStream({ user: 1 })
@@ -88,12 +88,12 @@ describe('routerFor - nested resources', () => {
       });
   });
 
-  it('should handle http GET /resource/:id/resource/:id', done => {
+  it('should handle http GET /resource/:id/resource/:id', (done) => {
     const { testGet } = testRouter(paths, router);
     testGet({ user: 1, id: 1 }).expect(200, done);
   });
 
-  it('should work on upload', done => {
+  it('should work on upload', (done) => {
     const { testUpload } = testRouter(paths, router);
     const options = {
       user: 1,
@@ -111,12 +111,12 @@ describe('routerFor - nested resources', () => {
     });
   });
 
-  it('should handle http POST /resource/:id/resource', done => {
+  it('should handle http POST /resource/:id/resource', (done) => {
     const { testPost } = testRouter(paths, router);
     testPost({ user: 1, name: faker.name.findName() }).expect(201, done);
   });
 
-  it('should handle http PATCH /resource/:id/resource/:id', done => {
+  it('should handle http PATCH /resource/:id/resource/:id', (done) => {
     const { testPatch } = testRouter(paths, router);
     testPatch({ user: 1, id: 1 }, { name: faker.name.findName() }).expect(
       200,
@@ -124,7 +124,7 @@ describe('routerFor - nested resources', () => {
     );
   });
 
-  it('should handle http PUT /resource/:id/resource/:id', done => {
+  it('should handle http PUT /resource/:id/resource/:id', (done) => {
     const { testPut } = testRouter(paths, router);
     testPut({ user: 1, id: 1 }, { name: faker.name.findName() }).expect(
       200,
@@ -132,7 +132,7 @@ describe('routerFor - nested resources', () => {
     );
   });
 
-  it('should handle http DELETE /resource/:id/resource/:id', done => {
+  it('should handle http DELETE /resource/:id/resource/:id', (done) => {
     const { testDelete } = testRouter(paths, router);
     testDelete({ user: 1, id: 1 }).expect(200, done);
   });

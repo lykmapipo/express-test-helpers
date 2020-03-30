@@ -30,17 +30,17 @@ describe('router test helpers - simple resource', () => {
   router.patch('/users/:id', (req, res) => res.ok());
   router.delete('/users/:id', (req, res) => res.ok());
 
-  it('should work on get', done => {
+  it('should work on get', (done) => {
     const { testGet } = testRouter('users', router);
     testGet().expect(200, done);
   });
 
-  it('should work on get schema', done => {
+  it('should work on get schema', (done) => {
     const { testGetSchema } = testRouter('users', router);
     testGetSchema().expect(200, done);
   });
 
-  it('should work on get export', done => {
+  it('should work on get export', (done) => {
     const { testGetExport } = testRouter('users', router);
     testGetExport()
       .expect('Content-Type', 'text/plain; charset=UTF-8')
@@ -48,7 +48,7 @@ describe('router test helpers - simple resource', () => {
       .expect(200, done);
   });
 
-  it('should work on get export', done => {
+  it('should work on get export', (done) => {
     const { testExport } = testRouter('users', router);
     testExport()
       .expect('Content-Type', 'text/plain; charset=UTF-8')
@@ -56,7 +56,7 @@ describe('router test helpers - simple resource', () => {
       .expect(200, done);
   });
 
-  it('should work on get download', done => {
+  it('should work on get download', (done) => {
     const { testDownload } = testRouter('users', router);
     testDownload()
       .expect('Content-Type', 'text/plain; charset=UTF-8')
@@ -64,7 +64,7 @@ describe('router test helpers - simple resource', () => {
       .expect(200, done);
   });
 
-  it('should work on get stream', done => {
+  it('should work on get stream', (done) => {
     const fileContent = readFileSync(file).toString('base64');
     const { testStream } = testRouter('users', router);
     testStream()
@@ -76,12 +76,12 @@ describe('router test helpers - simple resource', () => {
       });
   });
 
-  it('should work on get single', done => {
+  it('should work on get single', (done) => {
     const { testGet } = testRouter('users', router);
     testGet(1).expect(200, done);
   });
 
-  it('should work on upload', done => {
+  it('should work on upload', (done) => {
     const { testUpload } = testRouter('users', router);
     const options = { caption: 'avatar', attach: { avatar: file } };
     testUpload(options).expect(200, (error, { body }) => {
@@ -94,22 +94,22 @@ describe('router test helpers - simple resource', () => {
     });
   });
 
-  it('should work on post', done => {
+  it('should work on post', (done) => {
     const { testPost } = testRouter('users', router);
     testPost({ name: faker.name.findName() }).expect(201, done);
   });
 
-  it('should work on put', done => {
+  it('should work on put', (done) => {
     const { testPut } = testRouter('users', router);
     testPut(1, { name: faker.name.findName() }).expect(200, done);
   });
 
-  it('should work on patch', done => {
+  it('should work on patch', (done) => {
     const { testPatch } = testRouter('users', router);
     testPatch(1, { name: faker.name.findName() }).expect(200, done);
   });
 
-  it('should work on delete', done => {
+  it('should work on delete', (done) => {
     const { testDelete } = testRouter('users', router);
     testDelete(1).expect(200, done);
   });

@@ -43,7 +43,7 @@ import { compile as compilePath } from 'path-to-regexp';
  */
 export const clear = () => {
   // eslint-disable-next-line no-underscore-dangle
-  app._router.stack = filter(app._router.stack, stack => {
+  app._router.stack = filter(app._router.stack, (stack) => {
     const filtered =
       stack.name !== 'notFound' &&
       stack.name !== 'errorHandler' &&
@@ -110,7 +110,7 @@ export const testRequest = () => {
  *  });
  *
  */
-export const testOption = path => {
+export const testOption = (path) => {
   const request = testRequest().options(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -146,7 +146,7 @@ export const testOption = path => {
  *  });
  *
  */
-export const testHead = path => {
+export const testHead = (path) => {
   const request = testRequest().head(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -182,7 +182,7 @@ export const testHead = path => {
  *  });
  *
  */
-export const testGet = path => {
+export const testGet = (path) => {
   const request = testRequest().get(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -308,7 +308,7 @@ export const testPut = (path, body = {}) => {
  *  });
  *
  */
-export const testDelete = path => {
+export const testDelete = (path) => {
   const request = testRequest().delete(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -441,7 +441,7 @@ export const testDownload = (path, optns = {}) => {
   const parser = (response, cb) => {
     response.setEncoding(encoding);
     response.data = '';
-    response.on('data', chunk => {
+    response.on('data', (chunk) => {
       response.data += chunk;
     });
     response.on('end', () => {
@@ -450,9 +450,7 @@ export const testDownload = (path, optns = {}) => {
   };
 
   // create request
-  const request = testRequest()
-    .get(path)
-    .parse(parser);
+  const request = testRequest().get(path).parse(parser);
 
   // return request
   return request;
@@ -552,8 +550,8 @@ export const testRouter = (optns, router) => {
   mount(router);
 
   // helpers
-  const param = val => (isPlainObject(val) ? val : { id: val });
-  const isSingle = val => {
+  const param = (val) => (isPlainObject(val) ? val : { id: val });
+  const isSingle = (val) => {
     const params = param(val);
     const single = params && params.id;
     return single;
@@ -576,7 +574,7 @@ export const testRouter = (optns, router) => {
     testPost: (data = {}) => testPost(pathList(param(data)), data),
     testPatch: (id, data = {}) => testPatch(pathSingle(param(id)), data),
     testPut: (id, data = {}) => testPut(pathSingle(param(id)), data),
-    testDelete: id => testDelete(pathSingle(param(id))),
+    testDelete: (id) => testDelete(pathSingle(param(id))),
   };
 };
 
