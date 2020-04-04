@@ -1,3 +1,16 @@
+#### 0.9.0 (2020-04-04)
+
+##### Chores
+
+* **deps:**
+  *  force latest version & audit fix ([59ff1aaf](https://github.com/lykmapipo/express-test-helpers/commit/59ff1aaf37dfe83f29ae0169d19e68c30b6cf8de))
+  *  force latest version & audit fix ([d1ad27c0](https://github.com/lykmapipo/express-test-helpers/commit/d1ad27c0dc8987c6abb81f3971e01ee4f79e1008))
+  *  force latest version & audit fix ([de79aac5](https://github.com/lykmapipo/express-test-helpers/commit/de79aac5d32c58ea41b7672422ea64a7e9051d39))
+
+##### Refactors
+
+*  use latest uuid version ([a3323011](https://github.com/lykmapipo/express-test-helpers/commit/a33230114d1036a4a808326f1f0b4441ddf3ce77))
+
 #### 0.8.21 (2020-03-30)
 
 ##### Chores
