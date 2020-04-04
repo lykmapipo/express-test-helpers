@@ -1,5 +1,5 @@
 import { filter, forEach, has, isPlainObject } from 'lodash';
-import uuidv1 from 'uuid/v1';
+import { v1 as uuidv1 } from 'uuid';
 import {
   chai,
   expect,
