@@ -1,6 +1,6 @@
 {
   "name": "@lykmapipo/express-test-helpers",
-  "version": "0.8.21",
+  "version": "0.9.0",
   "description": "Sensible test helpers for express",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -91,7 +91,7 @@
   "peerDependencies": {},
   "dependencies": {
     "@lykmapipo/express-common": ">=0.18.0",
-    "@lykmapipo/test-helpers": ">=0.5.11",
+    "@lykmapipo/test-helpers": ">=0.5.12",
     "lodash": ">=4.17.15",
     "path-to-regexp": ">=6.1.0",
     "supertest": ">=4.0.2",

@@ -1,5 +1,5 @@
 import { filter, has, forEach, isPlainObject } from 'lodash';
-import uuidv1 from 'uuid/v1';
+import { v1 } from 'uuid';
 export { chai, expect, faker, mock, should, sinon, spy } from '@lykmapipo/test-helpers';
 import { app, testApp, mount } from '@lykmapipo/express-common';
 export { all, app, del, get, mount, patch, post, put, use } from '@lykmapipo/express-common';
@@ -25,7 +25,7 @@ import { compile } from 'path-to-regexp';
  */
 const clear = () => {
   // eslint-disable-next-line no-underscore-dangle
-  app._router.stack = filter(app._router.stack, stack => {
+  app._router.stack = filter(app._router.stack, (stack) => {
     const filtered =
       stack.name !== 'notFound' &&
       stack.name !== 'errorHandler' &&
@@ -92,7 +92,7 @@ const testRequest = () => {
  *  });
  *
  */
-const testOption = path => {
+const testOption = (path) => {
   const request = testRequest().options(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -128,7 +128,7 @@ const testOption = path => {
  *  });
  *
  */
-const testHead = path => {
+const testHead = (path) => {
   const request = testRequest().head(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -164,7 +164,7 @@ const testHead = path => {
  *  });
  *
  */
-const testGet = path => {
+const testGet = (path) => {
   const request = testRequest().get(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -290,7 +290,7 @@ const testPut = (path, body = {}) => {
  *  });
  *
  */
-const testDelete = path => {
+const testDelete = (path) => {
   const request = testRequest().delete(path);
   request.set('Accept', 'application/json');
   request.set('Content-Type', 'application/json');
@@ -323,7 +323,7 @@ const testDelete = path => {
  *
  */
 const testMiddleware = (...middlewares) => {
-  const path = `/${uuidv1()}`;
+  const path = `/${v1()}`;
   const testReply = (req, res) => res.ok();
   app.all(path, ...[...middlewares, testReply]);
   return {
@@ -423,7 +423,7 @@ const testDownload = (path, optns = {}) => {
   const parser = (response, cb) => {
     response.setEncoding(encoding);
     response.data = '';
-    response.on('data', chunk => {
+    response.on('data', (chunk) => {
       response.data += chunk;
     });
     response.on('end', () => {
@@ -432,9 +432,7 @@ const testDownload = (path, optns = {}) => {
   };
 
   // create request
-  const request = testRequest()
-    .get(path)
-    .parse(parser);
+  const request = testRequest().get(path).parse(parser);
 
   // return request
   return request;
@@ -534,8 +532,8 @@ const testRouter = (optns, router) => {
   mount(router);
 
   // helpers
-  const param = val => (isPlainObject(val) ? val : { id: val });
-  const isSingle = val => {
+  const param = (val) => (isPlainObject(val) ? val : { id: val });
+  const isSingle = (val) => {
     const params = param(val);
     const single = params && params.id;
     return single;
@@ -558,7 +556,7 @@ const testRouter = (optns, router) => {
     testPost: (data = {}) => testPost(pathList(param(data)), data),
     testPatch: (id, data = {}) => testPatch(pathSingle(param(id)), data),
     testPut: (id, data = {}) => testPut(pathSingle(param(id)), data),
-    testDelete: id => testDelete(pathSingle(param(id))),
+    testDelete: (id) => testDelete(pathSingle(param(id))),
   };
 };
 
