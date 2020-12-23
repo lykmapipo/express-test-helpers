@@ -1,3 +1,11 @@
+#### 0.9.15 (2020-12-23)
+
+##### Chores
+
+* **deps:**
+  *  force latest version & audit fix ([44dbe241](https://github.com/lykmapipo/express-test-helpers/commit/44dbe24194c4dda992e54ff05e4a58a879e66c58))
+  *  bump ini from 1.3.5 to 1.3.7 ([82ae5742](https://github.com/lykmapipo/express-test-helpers/commit/82ae5742835ac5f4189a4cf314ed05f372275a45))
+
 #### 0.9.14 (2020-09-13)
 
 ##### Chores
