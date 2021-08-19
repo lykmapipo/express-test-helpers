@@ -1,7 +1,14 @@
 # express-test-helpers
 
-[![Build Status](https://travis-ci.org/lykmapipo/express-test-helpers.svg?branch=master)](https://travis-ci.org/lykmapipo/express-test-helpers)
-[![Dependencies Status](https://david-dm.org/lykmapipo/express-test-helpers.svg?style=flat-square)](https://david-dm.org/lykmapipo/express-test-helpers)
+[![Build Status](https://travis-ci.com/lykmapipo/express-test-helpers.svg?branch=master)](https://travis-ci.com/lykmapipo/express-test-helpers)
+[![Dependencies Status](https://david-dm.org/lykmapipo/express-test-helpers.svg)](https://david-dm.org/lykmapipo/express-test-helpers)
+[![Coverage Status](https://coveralls.io/repos/github/lykmapipo/express-test-helpers/badge.svg?branch=master)](https://coveralls.io/github/lykmapipo/express-test-helpers?branch=master)
+[![GitHub License](https://img.shields.io/github/license/lykmapipo/express-test-helpers)](https://github.com/lykmapipo/express-test-helpers/blob/master/LICENSE)
+
+[![Commitizen Friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Code Style](https://badgen.net/badge/code%20style/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
+[![npm version](https://img.shields.io/npm/v/@lykmapipo/express-test-helpers)](https://www.npmjs.com/package/@lykmapipo/express-test-helpers)
 
 Sensible test helpers for express
 
@@ -13,10 +20,10 @@ $ npm install --save @lykmapipo/express-test-helpers
 
 ## Usage
 ```js
-const { 
+import { 
   app, testGet, testPost, testPatch, 
   testPut, testDelete, testOption, testHead 
-} = require('@lykmapipo/express-test-helpers');
+} from '@lykmapipo/express-test-helpers';
 
 app.get('/v1/users', (req, res)=> { res.ok(); });
 app.post('/v1/users', (req, res)=> { res.created(); });
@@ -38,7 +45,7 @@ testPost('/v1/users', { name: 'John Doe' })
 
 - With Mocha
 ```js
-const { clear, testGet } = require('@lykmapipo/express-test-helpers');
+import { clear, testGet } from '@lykmapipo/express-test-helpers';
 
 describe('GET /v1/users', () => {
     
