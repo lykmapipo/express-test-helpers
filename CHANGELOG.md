@@ -1,3 +1,10 @@
+#### 0.9.17 (2021-08-23)
+
+##### Chores
+
+* **deps:**  force latest version & audit fix ([7258dbd3](https://github.com/lykmapipo/express-test-helpers/commit/7258dbd3419fc43c7f809d717a38f778186bfc2e))
+*  add status badge & improve configs ([5ee7513e](https://github.com/lykmapipo/express-test-helpers/commit/5ee7513ec8d8505266a5af7a8e188bb03de545e9))
+
 #### 0.9.16 (2021-02-16)
 
 #### 0.9.15 (2020-12-23)
