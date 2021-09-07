@@ -1,6 +1,6 @@
 # express-test-helpers
 
-[![Build Status](https://travis-ci.com/lykmapipo/express-test-helpers.svg?branch=master)](https://travis-ci.com/lykmapipo/express-test-helpers)
+[![Build Status](https://app.travis-ci.com/lykmapipo/express-test-helpers.svg?branch=master)](https://app.travis-ci.com/lykmapipo/express-test-helpers)
 [![Dependencies Status](https://david-dm.org/lykmapipo/express-test-helpers.svg)](https://david-dm.org/lykmapipo/express-test-helpers)
 [![Coverage Status](https://coveralls.io/repos/github/lykmapipo/express-test-helpers/badge.svg?branch=master)](https://coveralls.io/github/lykmapipo/express-test-helpers?branch=master)
 [![GitHub License](https://img.shields.io/github/license/lykmapipo/express-test-helpers)](https://github.com/lykmapipo/express-test-helpers/blob/master/LICENSE)
